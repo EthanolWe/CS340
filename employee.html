@@ -1,0 +1,84 @@
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>NHDB</title>
+
+    <!-- This is a 3rd-party stylesheet to incorporate the font family to be used for this page ("Roboto"). -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+
+    <!-- This 3rd-party stylesheet incorporates SVG icons from Font Awesome: http://fontawesome.com/ -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css" media="screen">
+
+  </head>
+
+  <body>
+
+    <header>
+      <!-- The <i> tag below includes the lizard hand icon from Font Awesome.  Do not directly style this element. -->
+      <a href="#"><h1 class="site-title"><i class="fas fa-regular fa-book"></i> Museum of Natural History Database</h1></a>
+
+      <nav class="navbar">
+        <ul class="navlist">
+          <li class="navitem navlink"><a href="index.html">Home</a></li>
+          <li class="navitem navlink"><a href="exhibits.html">Exhibits</a></li>
+          <li class="navitem navlink"><a href="featured.html">Featured Items</a></li>
+          <li class="navitem navlink"><a href="events.html">Events</a></li>
+          <li class="navitem navlink active"><a href="#">Employees</a></li>
+          <li class="navitem navlink"><a href="shift.html">Shift Details</a></li>
+          
+        </ul>
+      </nav>
+    </header>
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Job</th>
+        <th>Email</th>
+        
+      </tr>
+      <tr>
+        <td>Bruce</td>
+        <td>Wayne</td>
+        <td>Night Guard</td>
+        <td>bwayne@alterego.com</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+      <tr>
+        <td>Joseph</td>
+        <td>Kerr</td>
+        <td>Entertainer</td>
+        <td>jkerr@clown.com</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+      <tr>
+        <td>Barry</td>
+        <td>Allen</td>
+        <td>Messanger</td>
+        <td>theflash@speedy.com</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+    </table>
+
+    <div class="create-entry-box">
+    <h3>Add Employee</h3>
+    <button type="button">Submit New Entry</button>
+    <p></p>
+    <form action="/action_page.php">
+      <label for="ename">First Name:</label>
+      <input type="text" id="ename" name="ename"><br><br>
+    
+      <label for="attenance">Last Name:</label>
+      <input type="number" id="attend" name="attend"><br><br>
+      
+      <label for="lname">Job:</label>
+      <input type="text" id="lname" name="lname"><br><br>
+      
+      <label for="lname">Email:</label>
+      <input type="text" id="lname" name="lname"><br><br>
+    </form>
+</div>
+    </html>

@@ -1,0 +1,98 @@
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>NHDB</title>
+
+    <!-- This is a 3rd-party stylesheet to incorporate the font family to be used for this page ("Roboto"). -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+
+    <!-- This 3rd-party stylesheet incorporates SVG icons from Font Awesome: http://fontawesome.com/ -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css" media="screen">
+
+  </head>
+
+  <body>
+
+    <header>
+      <!-- The <i> tag below includes the lizard hand icon from Font Awesome.  Do not directly style this element. -->
+      <a href="#"><h1 class="site-title"><i class="fas fa-regular fa-book"></i> Museum of Natural History Database</h1></a>
+
+      <nav class="navbar">
+        <ul class="navlist">
+          <li class="navitem navlink"><a href="index.html">Home</a></li>
+          <li class="navitem navlink"><a href="exhibits.html">Exhibits</a></li>
+          <li class="navitem navlink active"><a href="#">Featured Items</a></li>
+          <li class="navitem navlink"><a href="events.html">Events</a></li>
+          <li class="navitem navlink"><a href="employee.html">Employees</a></li>
+          <li class="navitem navlink"><a href="shift.html">Shift Details</a></li>
+          
+        </ul>
+      </nav>
+    </header>
+    <table>
+      <tr>
+        <th>Exhibit It Belongs To</th>
+        <th>Date Last Maintained</th>
+        <th>Needs Repair?</th>
+        <th>Description</th>
+        
+      </tr>
+      <tr>
+        <td>Diamond Gallery</td>
+        <td>1960-01-01</td>
+        <td>1</td>
+        <td>A 3,106 carat diamond</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+      <tr>
+        <td>Money Gallery</td>
+        <td>1963-07-03</td>
+        <td>0</td>
+        <td>Several display cases of different types of currency</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+      <tr>
+        <td>Money Gallery</td>
+        <td>1980-03-08</td>
+        <td>0</td>
+        <td>A rare one dollar bill from 1912</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+      <tr>
+        <td>Land of the Dead</td>
+        <td>2012-06-10</td>
+        <td>0</td>
+        <td>A sarcophagus containing Egyptian pharaoh Djaroh the Wise</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+      <tr>
+        <td>Bugland</td>
+        <td>2019-12-14</td>
+        <td>1</td>
+        <td>A large stag beetle</td>
+        <td><input class='myclass' type='button' value='Delete'/></td>
+      </tr>
+    </table>
+
+    <div class="create-entry-box">
+    <h3>Add Item</h3>
+    <button type="button">Submit New Entry</button>
+    <p></p>
+    <form action="/action_page.php">
+      <label for="ename">Exhibit It Belongs To:</label>
+      <input type="text" id="ename" name="ename"><br><br>
+    
+      <label for="attenance">Date Last Maintained:</label>
+      <input type="number" id="attend" name="attend"><br><br>
+      
+      <label for="lname">Needs Repair? (Bool):</label>
+      <input type="text" id="lname" name="lname"><br><br>
+      
+      <label for="lname">Description:</label>
+      <input type="text" id="lname" name="lname"><br><br>
+    </form>
+  </div>
+</html>
