@@ -8,7 +8,7 @@ var express = require('express');   // We are using the express library for the 
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-PORT        = 9328;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 9358;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -83,6 +83,37 @@ app.post('/add-person-form', function(req, res){
             }
         })
     })
+
+app.delete('/delete-person-ajax/', function(req,res,next){
+	let data = req.body;
+	let personID = parseInt(data.employee_id);
+	let deleteShift_Details = `DELETE FROM ShiftDetails WHERE employee_id = ?`;
+	let deleteEmployees = `DELETE FROM Employees WHERE employee_id = ?`;
+	
+	
+		// Run the 1st query
+		db.pool.query(deleteShift_Details, [personID], function(error, rows, fields){
+			if (error) {
+
+			// Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+			console.log(error);
+			res.sendStatus(400);
+			}
+
+			else
+			{
+				// Run the second query
+				db.pool.query(deleteEmployees, [personID], function(error, rows, fields) {
+
+					if (error) {
+						console.log(error);
+						res.sendStatus(400);
+					} else {
+						res.sendStatus(204);
+					}
+				})
+			}
+	})});
     
 /*
     LISTENER

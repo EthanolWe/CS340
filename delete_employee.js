@@ -1,4 +1,4 @@
-function deleteEmployee(id) {
+function deleteEmployee(personID) {
 	// Put our data we want to send in a javascript object
     let data = {
         id: personID
@@ -14,7 +14,7 @@ function deleteEmployee(id) {
         if (xhttp.readyState == 4 && xhttp.status == 204) {
 
             // Add the new data to the table
-            deleteRow(id);
+            deleteRow(personID);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
@@ -25,7 +25,7 @@ function deleteEmployee(id) {
     xhttp.send(JSON.stringify(data));
   }
   
-  function deleteRow(id){
+  function deleteRow(personID){
 	let table = document.getElementById("employee-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
