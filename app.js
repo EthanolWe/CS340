@@ -8,7 +8,7 @@ var express = require('express');   // We are using the express library for the 
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-PORT        = 9358;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 9328;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -21,24 +21,12 @@ var db = require('./db-connector')
     ROUTES
 */
 app.get('/', function(req, res)
-    {
-		let query1;
-		query1 = "SELECT * FROM Employees;";
-		if (req.query.last_name === undefined)
-		{
-			query1 = "SELECT * FROM Employees;";
-		}	
-        else
-		{
-			query1 = `SELECT * FROM Employees WHERE last_name LIKE "${req.query.last_name}%"`
-		}
-
-        db.pool.query(query1, function(error, rows, fields){
-			let people = rows;
-
-			return res.render('index', {data: people});
-        })
-    });
+{
+    let query1 = "SELECT * FROM Employees;";
+    db.pool.query(query1, function(error, rows, fields){
+        res.render('index', {data: rows});
+    })
+});
 
 app.get('/index', function(req, res)
     {
@@ -50,70 +38,59 @@ app.get('/index', function(req, res)
 
 
 app.get('/employee', function(req, res)
+{
+    let query1;
+    query1 = "SELECT * FROM Employees;";
+    if (req.query.last_name === undefined)
     {
-        let query1 = "SELECT * FROM Employees;";
-        db.pool.query(query1, function(error, rows, fields){
-            res.render('employee', {data: rows});
-        })
-    });
+        query1 = "SELECT * FROM Employees;";
+    }	
+    else
+    {
+        query1 = `SELECT * FROM Employees WHERE last_name LIKE "${req.query.last_name}%"`
+    }
 
-app.post('/add-person-form', function(req, res){
-        // Capture the incoming data and parse it back to a JS object
-        let data = req.body;
-    
-        // Capture NULL values
-    
-        // Create the query and run it on the database
-        query1 = `INSERT INTO Employees (first_name, last_name, job, email) VALUES ('${data['input-first_name']}', '${data['input-last_name']}', '${data['input-job']}', '${data['input-email']}')`;
-        db.pool.query(query1, function(error, rows, fields){
-    
-            // Check to see if there was an error
-            if (error) {
-    
-                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                console.log(error)
-                res.sendStatus(400);
-            }
-    
-            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
-            // presents it on the screen
-            else
-            {
-                res.redirect('/');
-            }
-        })
+    db.pool.query(query1, function(error, rows, fields){
+        let people = rows;
+
+        return res.render('index', {data: people});
     })
+});
 
-app.delete('/delete-person-ajax/', function(req,res,next){
-	let data = req.body;
-	let personID = parseInt(data.employee_id);
-	let deleteShift_Details = `DELETE FROM ShiftDetails WHERE employee_id = ?`;
-	let deleteEmployees = `DELETE FROM Employees WHERE employee_id = ?`;
-	
-	
-		// Run the 1st query
-		db.pool.query(deleteShift_Details, [personID], function(error, rows, fields){
-			if (error) {
-
-			// Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-			console.log(error);
-			res.sendStatus(400);
-			}
-
-			else
-			{
-				// Run the second query
-				db.pool.query(deleteEmployees, [personID], function(error, rows, fields) {
-
-					if (error) {
-						console.log(error);
-						res.sendStatus(400);
-					} else {
-						res.sendStatus(204);
-					}
-				})
-			}
-	})});
+    app.put('/put-employee-ajax', function(req,res,next){
+        let data = req.body;
+      
+        let job = parseInt(data.job);
+        let employee = parseInt(data.fullname);
+      
+        let queryJob = `UPDATE Employee SET job = ? WHERE Employee.id = ?`;
+        let selectWorld = `SELECT * FROM Employee WHERE id = ?`
+      
+              // Run the 1st query
+              db.pool.query(queryjob, [job, person], function(error, rows, fields){
+                  if (error) {
+      
+                  // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                  console.log(error);
+                  res.sendStatus(400);
+                  }
+      
+                  // If there was no error, we run our second query and return that data so we can use it to update the people's
+                  // table on the front-end
+                  else
+                  {
+                      // Run the second query
+                      db.pool.query(selectJob, [job], function(error, rows, fields) {
+      
+                          if (error) {
+                              console.log(error);
+                              res.sendStatus(400);
+                          } else {
+                              res.send(rows);
+                          }
+                      })
+                  }
+      })});
     
 /*
     LISTENER
