@@ -22,9 +22,21 @@ var db = require('./db-connector')
 */
 app.get('/', function(req, res)
     {
-        let query1 = "SELECT * FROM Employees;";
+		let query1;
+		query1 = "SELECT * FROM Employees;";
+		if (req.query.last_name === undefined)
+		{
+			query1 = "SELECT * FROM Employees;";
+		}	
+        else
+		{
+			query1 = `SELECT * FROM Employees WHERE last_name LIKE "${req.query.last_name}%"`
+		}
+
         db.pool.query(query1, function(error, rows, fields){
-            res.render('index', {data: rows});
+			let people = rows;
+
+			return res.render('index', {data: people});
         })
     });
 

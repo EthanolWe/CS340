@@ -22,18 +22,20 @@
     {{!-- Body section --}}
     <tbody>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{!-- For each row, print the id, fname, lname, job, and email in order --}}
         {{#each data}}
-        <tr>
-            <td>{{this.id}}</td>
+        <tr data-value={{this.employee_id}}>
+            <td>{{this.employee_id}}</td>
             <td>{{this.first_name}}</td>
             <td>{{this.last_name}}</td>
             <td>{{this.job}}</td>
             <td>{{this.email}}</td>
+			<td><button onclick="deleteEmployee({{this.employee_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_employee.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Adding Data using an HTML form</h2>
@@ -46,10 +48,26 @@
     <input type="text" name="input-last_name" id="input-last_name">
 
     <label for="input-job">Job: </label>
-    <input type="text" name="input-job" id="input-job">
+    {{!-- <input type="text" name="input-job" id="input-job"> --}}
+	<select name="input-job" id="input-job">
+        <option value="">Select a Job</option>
+        {{#each people}}
+        <option value="{{this.employee_id}}">{{this.job}}</option>
+        {{/each}}
+    </select>
 
     <label for="input-email">Email: </label>
     <input type="text" name="input-email" id="input-email">
 
     <input type="submit">
+</form>
+
+<h2>Search using an HTML Form</h2>
+<p>Search by last name using the field below. Partial last names are OK too!</p>
+<form id="search-person-html" method='GET' action='/'>
+    <label for="input-last_name">Search by Last Name: </label>
+    <input type="text" name="last_name" id="input-last_name-html-search">
+    
+    <input type="submit">
+    <a href='/'><button>Reset</button></a>
 </form>
