@@ -154,6 +154,22 @@ app.put('/put-employee-ajax', function(req,res,next){
                   })
               }
   })});
+app.get('/event', function(req, res){
+    res.render('event');                    // Note the call to render() and not send(). Using render() ensures the templating engine
+});  
+
+app.get('/exhibit', function(req, res){
+    res.render('exhibit');                    // Note the call to render() and not send(). Using render() ensures the templating engine
+});  
+
+app.get('/shift', function(req, res){
+    res.render('shift');                    // Note the call to render() and not send(). Using render() ensures the templating engine
+});  
+
+app.get('/featured', function(req, res){
+    res.render('featured');                    // Note the call to render() and not send(). Using render() ensures the templating engine
+});  
+
 
 /*
     LISTENER
