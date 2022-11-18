@@ -28,9 +28,9 @@
             <td>{{this.event_id}}</td>
             <td>{{this.event_attendance}}</td>
             <td>{{this.event_type}}</td>
-            <td>{{this.date}}</td>
+            <td>{{this.event_date}}</td>
             <td>{{this.exhibit_name}}</td>
-            <td>{{this.host_name}}</td>
+            <td>{{this.host}}</td>
             <td><button onclick="deleteEvent({{this.event_id}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -42,17 +42,23 @@
 <h2>Adding Data using an HTML form</h2>
 <p>To add a new event, please enter its information below and click `Submit`!</p>
 <form id="add-event-form" method="POST" action="/add-event-form">
-    <label for="input-event-type">Event Type: </label>
-    <input type="text" name="input-event-type" id="input-event-type">
+    <label for="input-event_type">Event Type: </label>
+    <input type="text" name="input-event_type" id="input-event_type">
     
     <label for="input-event-date">Event Date: </label>
-    <input type="date" name="input-date" id="date">
+    <input type="date" name="input_date" id="input_date">
 
     <label for="input-exhibit-name">Exhibit Name: </label>
-    <input type="text" name="input-exhibit-name" id="input-exhibit-name">
+    {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
+	<select name="input-exhibit_name" id="input-exhibit_name">
+        <option value="">Select an exhibit</option>
+        {{#each exhibits}}
+        <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
+        {{/each}}
+    </select>
 
-    <label for="input-host-name">Host Name: </label>
-    <input type="text" name="input-host_name" id="input-host_name">
+    <label for="input-host">Host: </label>
+    <input type="text" name="input-host" id="input-host">
 
     <input type="submit">
 </form>
@@ -68,36 +74,31 @@
 -->
 
 <h2>Search Using an HTML Form</h2>
-<p>Search by last name using the field below. Partial last names are OK too!</p>
-<form id="search-employee-html" method='GET' action='/employee'>
-    <label for="input-last_name">Search by Last Name: </label>
-    <input type="text" name="last_name" id="input-last_name-html-search">
+<p>Search by event name using the field below.</p>
+<form id="search-event-html" method='GET' action='/event'>
+    <label for="input-event">Search by Event Name: </label>
+    <input type="text" name="event_type" id="input-event_type-html-search">
     
     <input type="submit">
-    <a href='/employee'><button>Reset</button></a>
+    <a href='/event'><button>Reset</button></a>
 </form>
 
-<h2>Updating An Employee's Job Form</h2>
-<p>To update a specific employee's job select their name from the drop-down menu on the left and their desired job from the drop down menu on the right</p>
-<form id="update-employee-form-ajax">
+<h2>Updating An Event's Attendance Form</h2>
+<p>To update a specific event's attendance select its name from the drop-down menu on the left and input the updated attendance number on the right</p>
+<form id="update-event-form-ajax">
 
-    <label for="input-fullname">Full name: </label>
-    <select name="input-fullname" id="mySelect">
-        <option value="test">Select an Employee</option>
+    <label for="input-event_type">Event Name: </label>
+    <select name="input-event_type" id="mySelect">
+        <option value="test">Select an Event</option>
         {{#each data}}
-        <option value="{{this.employee_id}}">{{this.first_name}} {{this.last_name}}</option>
+        <option value="{{this.event_id}}">{{this.event_type}}</option>
         {{/each}}
     </select>
 
-    <label for="input-job">Job: </label>
-    <select name="input-job" id="input-job-update">
-        <option>Select a Job</option>
-        {{#each jobs}}
-        <option value="{{this.employee_id}}">{{this.job}}</option>
-        {{/each}}
-    </select>
+    <label for="input-attendance">Attendance: </label>
+    <input type="text" name="input-attendance" id="input-attendance">
     <input type="submit">
 
 </form>
 
-<script src="./js/update_employee.js"></script>
+<script src="./js/update_event.js"></script>
