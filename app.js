@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public')); // this is needed to allow for the form to use the ccs style sheet
-PORT        = 9327;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 9326;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -271,9 +271,122 @@ app.put('/put-event-ajax', function(req,res,next){
 
 // FUNCTIONS FOR EXHIBITS //
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/exhibit', function(req, res){
-    res.render('exhibit');                    // Note the call to render() and not send(). Using render() ensures the templating engine
-});  
+    // Declare Query 1
+   let query1;
+
+   // If there is no query string, we just perform a basic SELECT
+   if (req.query.exhibit_name === undefined)
+   {
+       query1 = "SELECT * FROM Exhibits;";
+   }
+
+   // If there is a query string, we assume this is a search, and return desired results
+   else
+   {
+       query1 = `SELECT * FROM Exhibits WHERE exhibit_name LIKE "${req.query.exhibit_name}%"`
+   }
+
+   // Query 2 is the same in both cases
+   let query2 = "SELECT * FROM Exhibits;";
+
+   // Run the 1st query
+   db.pool.query(query1, function(error, rows, fields){
+       
+       // Save the people
+       let exhibit = rows;
+       
+       // Run the second query
+       db.pool.query(query2, (error, rows, fields) => {
+           
+           // Save the planets
+           let names = rows;
+
+           return res.render('exhibit', {data: exhibit, names: names});
+       })
+   })
+});
+
+
+
+app.post('/add-exhibit-form', function(req, res){
+   // Capture the incoming data and parse it back to a JS object
+   let data = req.body;
+
+   // Create the query and run it on the database
+   query1 = `INSERT INTO Exhibits (exhibit_name, attendance, is_permanent, theme, rotation_date, install_date, exhibit_past_loc, exhibit_future_loc) VALUES ('${data['input-exhibit_name']}', '${data['input-attendance']}', '${data['input-is_permanent']}', '${data['input-theme']}', '${data['input-rotation_date']}', '${data['input-install_date']}', '${data['input-exhibit_past_loc']}', '${data['input-exhibit_future_loc']}')`;
+   db.pool.query(query1, function(error, rows, fields){
+
+       // Check to see if there was an error
+       if (error) {
+
+           // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+           console.log(error)
+           res.sendStatus(400);
+       }
+
+       // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+       // presents it on the screen
+       else
+       {
+           res.redirect('/exhibit');
+       }
+   })
+});
+
+app.delete('/delete-exhibit-ajax/', function(req,res,next){
+   let data = req.body;
+   let exhibitName = parseInt(data.exhibit_name);
+   let deleteExhibit= `DELETE FROM Exhibit WHERE exhibit_name = ?`;
+                 // Run the second query
+                 db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
+ 
+                     if (error) {
+                         console.log(error);
+                         res.sendStatus(400);
+                     } else {
+                         
+                         //res.sendStatus(204);
+                     }
+                 })
+});
+
+app.put('/put-exhibit-ajax', function(req,res,next){
+   let data = req.body;
+   //let employeeID = parseInt(data.id);
+   let attendance = parseInt(data.attendance);
+   let exhibit = parseInt(data.exhibit_name);
+ 
+   let queryUpdateAttendance = `UPDATE Exhibits SET attendance = ? WHERE Exhibits.exhibit_name = ?`;
+   let selectAttendance = `SELECT * FROM Exhibits WHERE Exhibits = ?`
+ 
+         // Run the 1st query
+         db.pool.query(queryUpdateAttendance, [attendance, exhibit], function(error, rows, fields){
+             if (error) {
+ 
+             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+             console.log(error);
+             res.sendStatus(400);
+             }
+ 
+             // If there was no error, we run our second query and return that data so we can use it to update the people's
+             // table on the front-end
+             else
+             {
+                 // Run the second query
+                 db.pool.query(selectAttendance, [job], function(error, rows, fields) {
+ 
+                     if (error) {
+                         console.log(error);
+                         res.sendStatus(400);
+                     } else {
+                         res.send(rows);
+                     }
+                 })
+             }
+ })}); 
 
 // FUNCTIONS FOR SHIFT DETAILS //
 

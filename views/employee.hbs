@@ -88,13 +88,8 @@
         {{/each}}
     </select>
 
-    <label for="input-job">Job: </label>
-    <select name="input-job" id="input-job-update">
-        <option>Select a Job</option>
-        {{#each jobs}}
-        <option value="{{this.employee_id}}">{{this.job}}</option>
-        {{/each}}
-    </select>
+    <label for="input-job">Input new job: </label>
+    <input type="text" name="input-name" id="input-job-update">
     <input type="submit">
 
 </form>
