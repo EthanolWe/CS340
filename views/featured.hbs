@@ -1,0 +1,118 @@
+<!-- index.hbs -->
+<h1>The server is running on Event!</h1>
+<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+
+<table id="featured-table">
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value={{this.id}}>
+            <td>{{this.item_id}}</td>
+            <td>{{this.exhibit_name}}</td>
+            <td>{{this.date_last_maintained}}</td>
+            <td>{{this.need_repair}}</td>
+            <td>{{this.description}}</td>
+            <td><button onclick="deleteItem({{this.item_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_item.js"></script>
+
+<!-- /views/index.hbs -->
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new item, please enter its information below and click `Submit`!</p>
+<form id="add-item-form" method="POST" action="/add-featured-form">
+    <label for="input-description">Item Description: </label>
+    <input type="text" name="input-description" id="input-description">
+    
+    <label for="input-date_last_maintained">Date Last Maintained: </label>
+    <input type="date" name="input_date" id="input_date">
+
+    <label for="input-need_repair">Needs Repair: </label>
+    <input type="radio" name="input-repair" id="input-repair-yes" value=1>
+	<label for="input-repair-yes">Yes </label>
+	<input type="radio" name="input-repair" id="input-repair-no" value=0>
+	<label for="input-repair-no">No</label>
+
+    <label for="input-exhibit_name">Exhibit Name: </label>
+    {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
+	<select name="input-exhibit_name" id="input-exhibit_name">
+        <option value="">Select an exhibit</option>
+        {{#each exhibits}}
+        <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+<script src="./js/add_item.js"></script>
+<!--
+<label for="input-fullname">Full name: </label>
+    <select name="input-fullname" id="mySelect">
+        <option value="test">Select a Person</option>
+        {{#each data}}
+        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}
+    </select>
+-->
+
+<h2>Search Using an HTML Form</h2>
+<p>Search by exhibit using the field below.</p>
+<form id="search-item-html" method='GET' action='/featured'>
+    <label for="input-exhibit">Search by Exhibit Name: </label>
+    {{!-- <input type="text" name="event_type" id="input-event_type-html-search"> --}}
+	<select name="exhibit_name" id="dropdownSearch">
+        <option value="">Select an exhibit</option>
+        {{#each exhibits}}
+        <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
+        {{/each}}
+    </select>
+    
+    <input type="submit">
+    <a href='/featured'><button>Reset</button></a>
+</form>
+
+<h2>Updating An Item's Repair Form</h2>
+<p>To update a specific item's repair status select its name from the drop-down menu on the left and input the updated info on the right</p>
+<form id="update-featured-form-ajax">
+
+    <label for="input-desc">Item Description: </label>
+    <select name="input-desc" id="mySelect">
+        <option value="test">Select an item</option>
+        {{#each data}}
+        <option value="{{this.item_id}}">{{this.description}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-last_date">Maintenance date: </label>
+    <input type="date" name="input-last_date" id="input-last_date">
+
+	<label for="input-needs_repair">Needs repair: </label>
+    <input type="radio" name="update-repair" id="update-repair-yes" value=1>
+	<label for="update-repair-yes">Yes </label>
+	<input type="radio" name="update-repair" id="update-repair-no" value=0>
+	<label for="update-repair-no">No</label>
+
+    <input type="submit">
+
+</form>
+
+<script src="./js/update_item.js"></script>
