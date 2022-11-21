@@ -391,8 +391,121 @@ app.put('/put-exhibit-ajax', function(req,res,next){
 // FUNCTIONS FOR SHIFT DETAILS //
 
 app.get('/shift', function(req, res){
-    res.render('shift');                    // Note the call to render() and not send(). Using render() ensures the templating engine
-});  
+    // Declare Query 1
+   let query1;
+
+   // If there is no query string, we just perform a basic SELECT
+   if (req.query.exhibit_name === undefined)
+   {
+       query1 = "SELECT * FROM Shift_Details;";
+   }
+
+   // If there is a query string, we assume this is a search, and return desired results
+   else
+   {
+       query1 = `SELECT * FROM Shift_Details WHERE exhibit_name LIKE "${req.query.exhibit_name}%"`
+   }
+
+   // Query 2 is the same in both cases
+   let query2 = "SELECT * FROM Shift_Details;";
+
+   // Run the 1st query
+   db.pool.query(query1, function(error, rows, fields){
+       
+       // Save the people
+       let people = rows;
+       
+       // Run the second query
+       db.pool.query(query2, (error, rows, fields) => {
+           
+           // Save the planets
+           let jobs = rows;
+
+           return res.render('shift', {data: people, jobs: jobs});
+       })
+   })
+});
+
+app.post('/add-shift-form', function(req, res){
+   // Capture the incoming data and parse it back to a JS object
+   let data = req.body;
+
+   // Create the query and run it on the database
+   query1 = `INSERT INTO Shift_Details (exhibit_name, employee_id, shift_start, shift_end) VALUES ('${data['input-exhibit_name']}', '${data['input-employee_id']}', '${data['input_date_start']}', '${data['input_date_end']}')`;
+   db.pool.query(query1, function(error, rows, fields){
+
+       // Check to see if there was an error
+       if (error) {
+
+           // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+           console.log(error)
+           res.sendStatus(400);
+       }
+
+       // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+       // presents it on the screen
+       else
+       {
+           res.redirect('/shift');
+       }
+   })
+});
+
+app.delete('/delete-shift-ajax/', function(req,res,next){
+    let data = req.body;
+    let shiftID = parseInt(data.shift_id);
+    let deleteShift = `DELETE FROM Shift_Details WHERE shift_id = ?`;
+		
+	// Run the query
+	db.pool.query(deleteShift, [shiftID], function(error, rows, fields) {
+
+		if (error) {
+			console.log(error);
+			res.sendStatus(400);
+		} else {
+			
+			//res.sendStatus(204);
+		}
+	})
+});
+
+app.put('/put-shift-ajax', function(req,res,next){
+   let data = req.body;
+   //let employeeID = parseInt(data.id);
+   let shiftStart = data.shift_start;
+   let shiftEnd = data.shift_end;
+   let shift = parseInt(data.shift_id);
+ 
+   let queryUpdateShift = `UPDATE Shift_Details SET shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
+   let selectShift = `SELECT * FROM Shift_Details WHERE shift_id = ?`
+ 
+   // Run the 1st query
+   db.pool.query(queryUpdateShift, [shiftStart, shiftEnd, shift], function(error, rows, fields){
+       if (error) {
+
+       // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+       console.log(error);
+       res.sendStatus(400);
+       }
+
+       // If there was no error, we run our second query and return that data so we can use it to update the people's
+       // table on the front-end
+       else
+       {
+           // Run the second query
+           db.pool.query(selectShift, [shift], function(error, rows, fields) {
+
+               if (error) {
+                   console.log(error);
+                   res.sendStatus(400);
+               } else {
+                   res.send(rows);
+               }
+           })
+       }
+   })
+});
+
 
 // FUNCTIONS FOR FEATURED ITEMS //
 
