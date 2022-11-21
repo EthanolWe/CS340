@@ -32,7 +32,7 @@
             <td>{{this.install_date}}</td>
             <td>{{this.exhibit_past_loc}}</td>
             <td>{{this.exhibit_future_loc}}</td>
-            <td><button onclick="deleteExhibit({{this.exhibit_name}})">Delete</button></td>
+            <td><button onclick="deleteExhibit('{{this.exhibit_name}}')">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>

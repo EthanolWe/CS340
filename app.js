@@ -121,7 +121,7 @@ app.delete('/delete-employee-ajax/', function(req,res,next){
 app.put('/put-employee-ajax', function(req,res,next){
     let data = req.body;
     //let employeeID = parseInt(data.id);
-    let job = parseInt(data.job);
+    let job = data.job;
     let employee = parseInt(data.fullname);
   
     let queryUpdateJob = `UPDATE Employees SET job = ? WHERE Employees.employee_id = ?`;
@@ -338,8 +338,8 @@ app.post('/add-exhibit-form', function(req, res){
 
 app.delete('/delete-exhibit-ajax/', function(req,res,next){
    let data = req.body;
-   let exhibitName = parseInt(data.exhibit_name);
-   let deleteExhibit= `DELETE FROM Exhibit WHERE exhibit_name = ?`;
+   let exhibitName = data.exhibit_name;
+   let deleteExhibit= `DELETE FROM Exhibits WHERE exhibit_name = ?`;
                  // Run the second query
                  db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
  
@@ -357,10 +357,10 @@ app.put('/put-exhibit-ajax', function(req,res,next){
    let data = req.body;
    //let employeeID = parseInt(data.id);
    let attendance = parseInt(data.attendance);
-   let exhibit = parseInt(data.exhibit_name);
+   let exhibit = data.exhibitName;
  
    let queryUpdateAttendance = `UPDATE Exhibits SET attendance = ? WHERE Exhibits.exhibit_name = ?`;
-   let selectAttendance = `SELECT * FROM Exhibits WHERE Exhibits = ?`
+   let selectAttendance = `SELECT * FROM Exhibits WHERE exhibit_name = ?`;
  
          // Run the 1st query
          db.pool.query(queryUpdateAttendance, [attendance, exhibit], function(error, rows, fields){
@@ -376,7 +376,7 @@ app.put('/put-exhibit-ajax', function(req,res,next){
              else
              {
                  // Run the second query
-                 db.pool.query(selectAttendance, [job], function(error, rows, fields) {
+                 db.pool.query(selectAttendance, [exhibit], function(error, rows, fields) {
  
                      if (error) {
                          console.log(error);
