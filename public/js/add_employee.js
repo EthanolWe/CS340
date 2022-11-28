@@ -1,3 +1,11 @@
+function validateForm() {
+    var x = document.forms["addEmployeeForm"]["input-last_name"].value;
+    if (x == "") {
+      alert("Last Name must be filled out");
+      return false;
+    }
+  }
+
 // Creates a single row from an Object representing a single record from
 // bsg_people
 addRowToTable = (data) => {
