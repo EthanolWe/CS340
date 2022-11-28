@@ -453,7 +453,7 @@ app.post('/add-shift-form', function(req, res){
 
 app.delete('/delete-shift-ajax/', function(req,res,next){
     let data = req.body;
-    let shiftID = parseInt(data.shift_id);
+    let shiftID = parseInt(data.id);
     let deleteShift = `DELETE FROM Shift_Details WHERE shift_id = ?`;
 		
 	// Run the query

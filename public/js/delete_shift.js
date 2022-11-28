@@ -9,14 +9,14 @@ function deleteDropDownMenu(shiftID){
   }
 }
 
-function deleteRow(itemID){
-  let table = document.getElementById("featured-table");
+function deleteRow(shiftID){
+  let table = document.getElementById("shift-table");
   for (let i = 0, row; row = table.rows[i]; i++) {
      //iterate through rows
      //rows would be accessed using the "row" variable assigned in the for loop
-     if (table.rows[i].getAttribute("data-value") == itemID) {
+     if (table.rows[i].getAttribute("data-value") == shiftID) {
           table.deleteRow(i);
-          deleteDropDownMenu(itemID);
+          deleteDropDownMenu(shiftID);
           break;
      }
   }
