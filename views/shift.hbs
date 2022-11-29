@@ -1,6 +1,5 @@
 <!-- index.hbs -->
-<h1>The server is running on Shift!</h1>
-<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+
 <p>This is our intersection table, please be gentle</p>
 
 <table id="shift-table">
@@ -37,75 +36,85 @@
 </table>
 <script src="./js/delete_shift.js"></script>
 
-<!-- /views/index.hbs -->
-<h2>Adding Data using an HTML form</h2>
-<p>To add a new shift, please enter its information below and click `Submit`!</p>
-<form id="add-shift-form" method="POST" action="/add-shift-form">
-    <label for="input-exhibit_name">Exhibit Name: </label>
-    <select name="input-exhibit_name" id="input-exhibit_name">
-        <option value="">Select an exhibit</option>
-        {{#each data}}
-            <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
-        {{/each}}
-    </select>
+<div class="create-entry-box">
+    <!-- /views/index.hbs -->
+    <h2>Adding Data using an HTML form</h2>
+    <p>To add a new shift, please enter its information below and click `Submit`!</p>
+    <form id="add-shift-form" method="POST" action="/add-shift-form">
+        <dt>
+        <label for="input-exhibit_name">Exhibit Name: </label>
+        <select name="input-exhibit_name" id="input-exhibit_name" required>
+            <option value="">Select an exhibit</option>
+            {{#each data}}
+                <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
+            {{/each}}
+        </select>
+        </dt>
+        <dt>
+        <label for="input-employee-id">Employee ID: </label>
+        {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
+        <select name="input-employee_id" id="input-employee_id" required>
+            <option value="">Select an employee</option>
+            {{#each data}}
+                <option value="{{this.employee_id}}">{{this.employee_id}}</option>
+            {{/each}}
+        </select>
+        </dt>
+        <dt>
+        <label for="input-shift-date-start">Shift Start: </label>
+        <input type="datetime-local" name="input_date_start" id="input_date_start" required>
+        </dt>
+        <dt>
+        <label for="input-shift-date-end">Shift End: </label>
+        <input type="datetime-local" name="input_date_end" id="input_date_end" required>
+        </dt>
+        <dt>
+        <input type="submit">
+        </dt>
+    </form>
+    <script src="./js/add_shift.js"></script>
+</div>
 
-    {{!--<input type="text" name="input-exhibit_name" id="input-exhibit_name">--}}
+<div class="create-entry-box">
+    <h2>Search Using an HTML Form</h2>
+    <p>Search by Exhibit location name using the field below.</p>
+    <form id="search-shift-html" method='GET' action='/shift'>
+        <label for="input-shift">Search by Exhibit Name: </label>
+        <input type="text" name="exhibit_name" id="input-exhibit_name-html-search">
+        
+        <input type="submit">
+        <a href='/shift'><button>Reset</button></a>
+    </form>
+</div>
 
-    <label for="input-employee-id">Employee ID: </label>
-    {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
-	<select name="input-employee_id" id="input-employee_id">
-        <option value="">Select an employee</option>
-        {{#each data}}
-            <option value="{{this.employee_id}}">{{this.employee_id}}</option>
-        {{/each}}
-    </select>
+<div class="create-entry-box">
+    <h2>Updating An Employee's Shift Form</h2>
+    <p>To update a specific employee's shift select its name from the drop-down menu on the left and input the updated datetimes on the right</p>
+    <form id="update-shift-form-ajax">
+        
+        <dt>
+        <label for="input-shift_id">Shift ID: </label>
+        <select name="input-shift_id" id="mySelect" required>
+            <option value="test">Select a shift</option>
+            {{#each data}}
+            <option value="{{this.shift_id}}">{{this.shift_id}}</option>
+            {{/each}}
+        </select>
+        </dt>
+        <dt>
+        
+        <label for="update-shift-date-start">Shift Start: </label>
+        <input type="datetime-local" name="update_date_start" id="update_date_start" required>
+        </dt>
+        <dt>
 
-    <label for="input-shift-date-start">Shift Start: </label>
-    <input type="datetime-local" name="input_date_start" id="input_date_start">
+        <label for="update-shift-date-end">Shift End: </label>
+        <input type="datetime-local" name="update_date_end" id="update_date_end" required>
+        </dt>
+        <dt>
+        <input type="submit">
+        </dt>
+    </form>
 
-    <label for="input-shift-date-end">Shift End: </label>
-    <input type="datetime-local" name="input_date_end" id="input_date_end">
-
-    <input type="submit">
-</form>
-<script src="./js/add_shift.js"></script>
-
-
-
-<h2>Search Using an HTML Form</h2>
-<p>Search by Exhibit location name using the field below.</p>
-<form id="search-shift-html" method='GET' action='/shift'>
-    <label for="input-shift">Search by Exhibit Name: </label>
-    <input type="text" name="exhibit_name" id="input-exhibit_name-html-search">
-    
-    <input type="submit">
-    <a href='/shift'><button>Reset</button></a>
-</form>
-
-
-
-<h2>Updating An Employee's Shift Form</h2>
-<p>To update a specific employee's shift select its name from the drop-down menu on the left and input the updated datetimes on the right</p>
-<form id="update-shift-form-ajax">
-
-    <label for="input-shift_id">Shift ID: </label>
-    <select name="input-shift_id" id="mySelect">
-        <option value="test">Select a shift</option>
-        {{#each data}}
-        <option value="{{this.shift_id}}">{{this.shift_id}}</option>
-        {{/each}}
-    </select>
-
-    
-    <label for="update-shift-date-start">Shift Start: </label>
-    <input type="datetime-local" name="update_date_start" id="update_date_start">
-    
-
-    <label for="update-shift-date-end">Shift End: </label>
-    <input type="datetime-local" name="update_date_end" id="update_date_end">
-    
-    <input type="submit">
-
-</form>
-
-<script src="./js/update_shift.js"></script>
+    <script src="./js/update_shift.js"></script>
+</div>

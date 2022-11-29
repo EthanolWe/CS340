@@ -373,8 +373,8 @@ app.delete('/delete-exhibit-ajax/', function(req,res,next){
 
 		else
 		{
-            db.pool.query(deleteTheItems, [exhibitName], function(error, rows, fields) {})
             db.pool.query(deleteTheEvents, [exhibitName], function(error, rows, fields) {})
+            db.pool.query(deleteTheItems, [exhibitName], function(error, rows, fields) {})
 			// Run the second query
 			db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
 

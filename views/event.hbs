@@ -1,6 +1,5 @@
 <!-- index.hbs -->
-<h1>The server is running on Event!</h1>
-<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 
 <table id="event-table">
@@ -38,67 +37,76 @@
 </table>
 <script src="./js/delete_event.js"></script>
 
-<!-- /views/index.hbs -->
-<h2>Adding Data using an HTML form</h2>
-<p>To add a new event, please enter its information below and click `Submit`!</p>
-<form id="add-event-form" method="POST" action="/add-event-form">
-    <label for="input-event_type">Event Type: </label>
-    <input type="text" name="input-event_type" id="input-event_type">
-    
-    <label for="input-event-date">Event Date: </label>
-    <input type="date" name="input_date" id="input_date">
+<div class="create-entry-box">
+    <!-- /views/index.hbs -->
+    <h2>Adding Data using an HTML form</h2>
+    <p>To add a new event, please enter its information below and click `Submit`!</p>
 
-    <label for="input-exhibit-name">Exhibit Name: </label>
-    {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
-	<select name="input-exhibit_name" id="input-exhibit_name">
-        <option value="">Select an exhibit</option>
-        {{#each exhibits}}
-        <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
-        {{/each}}
-    </select>
+    <form id="add-event-form" method="POST" action="/add-event-form">
+        <dt>
+        <label for="input-event_type">Event Type: </label>
+        <input type="text" name="input-event_type" id="input-event_type" required>
+        </dt>
+        <dt>
+        <label for="input-event-date">Event Date: </label>
+        <input type="date" name="input_date" id="input_date" required>
+        </dt>
+        <dt>
+        <label for="input-exhibit-name">Exhibit Name: </label>
+        {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
+        <select name="input-exhibit_name" id="input-exhibit_name" required>
+            <option value="">Select an exhibit</option>
+            {{#each exhibits}}
+            <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
+            {{/each}}
+        </select>
+        </dt>
+        <dt>
+        <label for="input-host">Host: </label>
+        <input type="text" name="input-host" id="input-host">
+        </dt>
+        <dt>
+        <input type="submit">
+        </dt>
+        
+    </form>
+    <script src="./js/add_event.js"></script>
+</div>
+<div class="create-entry-box">
+    <h2>Search Using an HTML Form</h2>
+    <p>Search by event name using the field below.</p>
+    <form id="search-event-html" method='GET' action='/event'>
+        <label for="input-event">Search by Event Name: </label>
+        <input type="text" name="event_type" id="input-event_type-html-search">
+        
+        <input type="submit">
+        <a href='/event'><button>Reset</button></a>
+    </form>
+</div>
 
-    <label for="input-host">Host: </label>
-    <input type="text" name="input-host" id="input-host">
-
-    <input type="submit">
-</form>
-<script src="./js/add_event.js"></script>
-<!--
-<label for="input-fullname">Full name: </label>
-    <select name="input-fullname" id="mySelect">
-        <option value="test">Select a Person</option>
-        {{#each data}}
-        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-        {{/each}}
-    </select>
--->
-
-<h2>Search Using an HTML Form</h2>
-<p>Search by event name using the field below.</p>
-<form id="search-event-html" method='GET' action='/event'>
-    <label for="input-event">Search by Event Name: </label>
-    <input type="text" name="event_type" id="input-event_type-html-search">
-    
-    <input type="submit">
-    <a href='/event'><button>Reset</button></a>
-</form>
-
-<h2>Updating An Event's Attendance Form</h2>
-<p>To update a specific event's attendance select its name from the drop-down menu on the left and input the updated attendance number on the right</p>
-<form id="update-event-form-ajax">
-
-    <label for="input-event_type">Event Name: </label>
-    <select name="input-event_type" id="mySelect">
-        <option value="test">Select an Event</option>
-        {{#each data}}
-        <option value="{{this.event_id}}">{{this.event_type}}</option>
-        {{/each}}
-    </select>
-
-    <label for="input-attendance">Attendance: </label>
-    <input type="text" name="input-attendance" id="input-attendance">
-    <input type="submit">
-
-</form>
+<div class="create-entry-box">
+    <h2>Updating An Event's Attendance Form</h2>
+    <p>To update a specific event's attendance select its name from the drop-down menu on the left and input the updated attendance number on the right</p>
+    <form id="update-event-form-ajax">
+        
+        <dt>
+        <label for="input-event_type">Event Name: </label>
+        <select name="input-event_type" id="mySelect" required>
+            <option value="test">Select an Event</option>
+            {{#each data}}
+            <option value="{{this.event_id}}">{{this.event_type}}</option>
+            {{/each}}
+        </select>
+        </dt>
+        <dt>
+        <label for="input-attendance">Attendance: </label>
+        <input type="text" name="input-attendance" id="input-attendance" required>
+        </dt>
+        <dt>
+        <input type="submit">
+        </dt>
+        
+    </form>
 
 <script src="./js/update_event.js"></script>
+</div>
