@@ -336,10 +336,12 @@ app.post('/add-exhibit-form', function(req, res){
    })
 });
 
-app.delete('/delete-exhibit-ajax/', function(req,res,next){
+/*app.delete('/delete-exhibit-ajax/', function(req,res,next){
    let data = req.body;
    let exhibitName = data.exhibit_name;
    let deleteExhibit= `DELETE FROM Exhibits WHERE exhibit_name = ?`;
+    
+
                  // Run the second query
                  db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
  
@@ -352,6 +354,42 @@ app.delete('/delete-exhibit-ajax/', function(req,res,next){
                      }
                  })
 });
+*/
+app.delete('/delete-exhibit-ajax/', function(req,res,next){
+    let data = req.body;
+    let exhibitName = data.exhibit_name;
+    let deleteExhibit= `DELETE FROM Exhibits WHERE exhibit_name = ?`;
+    let deleteTheEvents= 'DELETE FROM Events WHERE exhibit_name = ?';
+    let deleteTheItems= 'DELETE FROM Featured_Items WHERE exhibit_name = ?'
+    let deleteShift_Details2 = `DELETE FROM Shift_Details WHERE employee_id = ?`;
+	// Run the 1st query
+	db.pool.query(deleteShift_Details2, [exhibitName], function(error, rows, fields){
+		if (error) {
+
+		// Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+		console.log(error);
+		res.sendStatus(400);
+		}
+
+		else
+		{
+            db.pool.query(deleteTheItems, [exhibitName], function(error, rows, fields) {})
+            db.pool.query(deleteTheEvents, [exhibitName], function(error, rows, fields) {})
+			// Run the second query
+			db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
+
+				if (error) {
+					console.log(error);
+					res.sendStatus(400);
+				} else {
+					
+					//res.sendStatus(204);
+				}
+			})
+		}
+	})
+});
+
 
 app.put('/put-exhibit-ajax', function(req,res,next){
    let data = req.body;

@@ -45,7 +45,7 @@ updateEmployeeForm.addEventListener("submit", function (e) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
     alert("Employee Updated. Refreshing the page.");
-    window.location.href = 'http://flip3.engr.oregonstate.edu:9326/employee';
+    window.location.href = 'http://flip2.engr.oregonstate.edu:9326/employee';
 })
 
 
