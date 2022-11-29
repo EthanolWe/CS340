@@ -54,8 +54,8 @@ Create or Replace Table Shift_Details (
 	employee_id int NOT NULL,
 	shift_start datetime NOT NULL,
 	shift_end datetime NOT NULL,
-	foreign key (exhibit_name) references Exhibits(exhibit_name),
-	foreign key (employee_id) references Employees(employee_id)
+	foreign key (exhibit_name) references Exhibits(exhibit_name) ON DELETE CASCADE,
+	foreign key (employee_id) references Employees(employee_id) ON DELETE CASCADE
 );
 
 insert into Employees(

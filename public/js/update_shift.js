@@ -9,14 +9,14 @@ updateItemForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
 	let inputID = document.getElementById("mySelect");
-    let inputStart = document.getElementById("input_date_start");
-    let inputEnd = document.getElementById("input_date_end");
+    let inputStart = document.getElementById("update_date_start");
+    let inputEnd = document.getElementById("update_date_end");
 
+    
     // Get the values from the form fields
     let idValue = inputID.value;
     let startValue = inputStart.value;
     let endValue = inputEnd.value;
-	
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld

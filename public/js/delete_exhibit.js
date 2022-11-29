@@ -51,7 +51,7 @@ function deleteExhibit(exhibitName) {
   // Send the request and wait for the response
   xhttp.send(JSON.stringify(data));
   alert("Exhibit deleted. Refreshing the page.");
-  window.location.href = 'http://flip3.engr.oregonstate.edu:9326/exhibit';
+  window.location.href = 'http://flip2.engr.oregonstate.edu:9326/exhibit';
 }
 
 

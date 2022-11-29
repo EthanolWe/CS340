@@ -336,10 +336,12 @@ app.post('/add-exhibit-form', function(req, res){
    })
 });
 
-app.delete('/delete-exhibit-ajax/', function(req,res,next){
+/*app.delete('/delete-exhibit-ajax/', function(req,res,next){
    let data = req.body;
    let exhibitName = data.exhibit_name;
    let deleteExhibit= `DELETE FROM Exhibits WHERE exhibit_name = ?`;
+    
+
                  // Run the second query
                  db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
  
@@ -352,6 +354,42 @@ app.delete('/delete-exhibit-ajax/', function(req,res,next){
                      }
                  })
 });
+*/
+app.delete('/delete-exhibit-ajax/', function(req,res,next){
+    let data = req.body;
+    let exhibitName = data.exhibit_name;
+    let deleteExhibit= `DELETE FROM Exhibits WHERE exhibit_name = ?`;
+    let deleteTheEvents= 'DELETE FROM Events WHERE exhibit_name = ?';
+    let deleteTheItems= 'DELETE FROM Featured_Items WHERE exhibit_name = ?'
+    let deleteShift_Details2 = `DELETE FROM Shift_Details WHERE employee_id = ?`;
+	// Run the 1st query
+	db.pool.query(deleteShift_Details2, [exhibitName], function(error, rows, fields){
+		if (error) {
+
+		// Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+		console.log(error);
+		res.sendStatus(400);
+		}
+
+		else
+		{
+            db.pool.query(deleteTheEvents, [exhibitName], function(error, rows, fields) {})
+            db.pool.query(deleteTheItems, [exhibitName], function(error, rows, fields) {})
+			// Run the second query
+			db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
+
+				if (error) {
+					console.log(error);
+					res.sendStatus(400);
+				} else {
+					
+					//res.sendStatus(204);
+				}
+			})
+		}
+	})
+});
+
 
 app.put('/put-exhibit-ajax', function(req,res,next){
    let data = req.body;
@@ -472,13 +510,14 @@ app.delete('/delete-shift-ajax/', function(req,res,next){
 app.put('/put-shift-ajax', function(req,res,next){
    let data = req.body;
    //let employeeID = parseInt(data.id);
+   
+   let shift = parseInt(data.shift_id);
    let shiftStart = data.shift_start;
    let shiftEnd = data.shift_end;
-   let shift = parseInt(data.shift_id);
- 
+
    let queryUpdateShift = `UPDATE Shift_Details SET shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
    let selectShift = `SELECT * FROM Shift_Details WHERE shift_id = ?`
- 
+    
    // Run the 1st query
    db.pool.query(queryUpdateShift, [shiftStart, shiftEnd, shift], function(error, rows, fields){
        if (error) {
