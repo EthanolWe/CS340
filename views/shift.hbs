@@ -69,15 +69,8 @@
     <input type="submit">
 </form>
 <script src="./js/add_shift.js"></script>
-<!--
-<label for="input-fullname">Full name: </label>
-    <select name="input-fullname" id="mySelect">
-        <option value="test">Select a Person</option>
-        {{#each data}}
-        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-        {{/each}}
-    </select>
--->
+
+
 
 <h2>Search Using an HTML Form</h2>
 <p>Search by Exhibit location name using the field below.</p>
@@ -88,6 +81,8 @@
     <input type="submit">
     <a href='/shift'><button>Reset</button></a>
 </form>
+
+
 
 <h2>Updating An Employee's Shift Form</h2>
 <p>To update a specific employee's shift select its name from the drop-down menu on the left and input the updated datetimes on the right</p>
@@ -102,12 +97,12 @@
     </select>
 
     
-    <label for="input-shift-date-start">Shift Start: </label>
-    <input type="datetime-local" name="input_date_start" id="input_date_start">
+    <label for="update-shift-date-start">Shift Start: </label>
+    <input type="datetime-local" name="update_date_start" id="update_date_start">
     
 
-    <label for="input-shift-date-end">Shift End: </label>
-    <input type="datetime-local" name="input_date_end" id="input_date_end">
+    <label for="update-shift-date-end">Shift End: </label>
+    <input type="datetime-local" name="update_date_end" id="update_date_end">
     
     <input type="submit">
 

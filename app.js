@@ -472,13 +472,14 @@ app.delete('/delete-shift-ajax/', function(req,res,next){
 app.put('/put-shift-ajax', function(req,res,next){
    let data = req.body;
    //let employeeID = parseInt(data.id);
+   
+   let shift = parseInt(data.shift_id);
    let shiftStart = data.shift_start;
    let shiftEnd = data.shift_end;
-   let shift = parseInt(data.shift_id);
- 
+
    let queryUpdateShift = `UPDATE Shift_Details SET shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
    let selectShift = `SELECT * FROM Shift_Details WHERE shift_id = ?`
- 
+    
    // Run the 1st query
    db.pool.query(queryUpdateShift, [shiftStart, shiftEnd, shift], function(error, rows, fields){
        if (error) {
