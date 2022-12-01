@@ -445,7 +445,9 @@ app.get('/shift', function(req, res){
    }
 
    // Query 2 is the same in both cases
-   let query2 = "SELECT * FROM Shift_Details;";
+   let query2 = "SELECT * FROM Exhibits;";
+
+   let query3 = "SELECT * FROM Employees";
 
    // Run the 1st query
    db.pool.query(query1, function(error, rows, fields){
@@ -457,9 +459,23 @@ app.get('/shift', function(req, res){
        db.pool.query(query2, (error, rows, fields) => {
            
            // Save the planets
-           let jobs = rows;
+           let exhibits = rows;
 
-           return res.render('shift', {data: people, jobs: jobs});
+
+           db.pool.query(query3, (error, rows, fields) => {
+
+            let employ = rows;
+                return res.render('shift', {data: people, exhibits: exhibits, employ: employ});
+            })
+           /*let exhibitmap = {}
+           exhibits.map(exhibit => {
+                let id = parseInt(exhibits.id, 10);
+
+                exhibitmap[id] = exhibit["exhibit_name"];
+            })
+            */
+           //console.log(exhibits);
+           
        })
    })
 });
@@ -468,11 +484,12 @@ app.post('/add-shift-form', function(req, res){
    // Capture the incoming data and parse it back to a JS object
    let data = req.body;
 
-   let id = parseInt(data['input-employee_id']);
+   let id = parseInt(data['input-employee-id']);
     if (isNaN(id))
     {
         id = 'NULL'
     }
+    //let exhName = data['input-exhibit_name'];
 
    // Create the query and run it on the database
    query1 = `INSERT INTO Shift_Details (exhibit_name, employee_id, shift_start, shift_end) VALUES ('${data['input-exhibit_name']}', ${id}, '${data['input_date_start']}', '${data['input_date_end']}')`;
@@ -515,40 +532,78 @@ app.delete('/delete-shift-ajax/', function(req,res,next){
 
 app.put('/put-shift-ajax', function(req,res,next){
    let data = req.body;
-   //let employeeID = parseInt(data.id);
-   
-   let shift = parseInt(data.shift_id);
+   let shift = parseInt(data.shift_id);;
    let shiftStart = data.shift_start;
    let shiftEnd = data.shift_end;
-
-   let queryUpdateShift = `UPDATE Shift_Details SET shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
+   let queryUpdateShift;
+   let employeeid = parseInt(data.employee_id);
    let selectShift = `SELECT * FROM Shift_Details WHERE shift_id = ?`
+
+
+   if (isNaN(employeeid))
+    {
+        queryUpdateShift = `UPDATE Shift_Details SET employee_id = NULL, shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
+        db.pool.query(queryUpdateShift, [shiftStart, shiftEnd, shift], function(error, rows, fields){
+            if (error) {
+     
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+     
+            // If there was no error, we run our second query and return that data so we can use it to update the people's
+            // table on the front-end
+            else
+            {
+                // Run the second query
+                db.pool.query(selectShift, [shift], function(error, rows, fields) {
+     
+                    if (error) {
+                        console.log(error);
+                        res.sendStatus(400);
+                    } else {
+                        res.send(rows);
+                    }
+                })
+            }
+        })
+
+    } else {
+        queryUpdateShift = `UPDATE Shift_Details SET employee_id = ?, shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
+        db.pool.query(queryUpdateShift, [employeeid, shiftStart, shiftEnd, shift], function(error, rows, fields){
+            if (error) {
+     
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+     
+            // If there was no error, we run our second query and return that data so we can use it to update the people's
+            // table on the front-end
+            else
+            {
+                // Run the second query
+                db.pool.query(selectShift, [shift], function(error, rows, fields) {
+     
+                    if (error) {
+                        console.log(error);
+                        res.sendStatus(400);
+                    } else {
+                        res.send(rows);
+                    }
+                })
+            }
+        })
+
+    }
+    
+   
+
+   //queryUpdateShift = `UPDATE Shift_Details SET employee_id = ?, shift_start = ?, shift_end = ?  WHERE Shift_Details.shift_id = ?`;
+   //let selectShift = `SELECT * FROM Shift_Details WHERE shift_id = ?`
     
    // Run the 1st query
-   db.pool.query(queryUpdateShift, [shiftStart, shiftEnd, shift], function(error, rows, fields){
-       if (error) {
-
-       // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-       console.log(error);
-       res.sendStatus(400);
-       }
-
-       // If there was no error, we run our second query and return that data so we can use it to update the people's
-       // table on the front-end
-       else
-       {
-           // Run the second query
-           db.pool.query(selectShift, [shift], function(error, rows, fields) {
-
-               if (error) {
-                   console.log(error);
-                   res.sendStatus(400);
-               } else {
-                   res.send(rows);
-               }
-           })
-       }
-   })
+   
 });
 
 

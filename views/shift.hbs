@@ -47,15 +47,22 @@
         <label for="input-exhibit_name">Exhibit Name: </label>
         <select name="input-exhibit_name" id="input-exhibit_name" required>
             <option value="">Select an exhibit</option>
-            {{#each data}}
+            {{#each exhibits}}
                 <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
             {{/each}}
         </select>
         </dt>
         <dt>
-        <label for="input-employee-id">Employee ID: </label>
-        <input type="number" name="input-employee_id" id="input-employee_id">
 
+
+
+        <label for="input-employee-id">Employee ID: </label>
+        <select name="input-employee-id" id="input-employee-id">
+            <option value="">Default: NULL</option>
+            {{#each employ}}
+                <option value="{{this.employee_id}}">{{this.employee_id}}</option>
+            {{/each}}
+        </select>
         
         </dt>
         <dt>
@@ -100,8 +107,16 @@
         </select>
         </dt>
         <dt>
-        <label for="update-shift-employee">Employee ID: </label>
-        <input type="number" name="update_shift_employee" id="update_shift_employee">
+        <label for="update_shift_employee">Employee ID: </label>
+       <select name="update_shift_employee" id="update_shift_employee">
+            <option value="test">Default: NULL</option>
+            {{#each employ}}
+            <option value="{{this.employee_id}}">{{this.employee_id}}</option>
+            {{/each}}
+        </select>
+        
+        
+        
         </dt>
         <dt>
         <label for="update-shift-date-start">Shift Start: </label>
