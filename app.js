@@ -468,8 +468,14 @@ app.post('/add-shift-form', function(req, res){
    // Capture the incoming data and parse it back to a JS object
    let data = req.body;
 
+   let id = parseInt(data['input-employee_id']);
+    if (isNaN(id))
+    {
+        id = 'NULL'
+    }
+
    // Create the query and run it on the database
-   query1 = `INSERT INTO Shift_Details (exhibit_name, employee_id, shift_start, shift_end) VALUES ('${data['input-exhibit_name']}', '${data['input-employee_id']}', '${data['input_date_start']}', '${data['input_date_end']}')`;
+   query1 = `INSERT INTO Shift_Details (exhibit_name, employee_id, shift_start, shift_end) VALUES ('${data['input-exhibit_name']}', ${id}, '${data['input_date_start']}', '${data['input_date_end']}')`;
    db.pool.query(query1, function(error, rows, fields){
 
        // Check to see if there was an error
