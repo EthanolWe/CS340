@@ -48,7 +48,7 @@ function deleteShift(shiftID) {
   // Send the request and wait for the response
   xhttp.send(JSON.stringify(data));
   alert("Shift deleted. Refreshing the page.");
-  window.location.href = 'http://flip2.engr.oregonstate.edu:9326/shift';
+  window.location.href = 'http://flip1.engr.oregonstate.edu:9329/shift';
 }
 
 

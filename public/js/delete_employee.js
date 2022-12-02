@@ -48,7 +48,7 @@ function deleteEmployee(employeeID) {
   // Send the request and wait for the response
   xhttp.send(JSON.stringify(data));
   alert("Employee deleted. Refreshing the page.");
-  window.location.href = 'http://flip2.engr.oregonstate.edu:9326/employee';
+  window.location.href = 'http://flip1.engr.oregonstate.edu:9329/employee';
 }
 
 
