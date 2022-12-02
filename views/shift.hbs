@@ -42,23 +42,28 @@
     <p>To add a new shift, please enter its information below and click `Submit`!</p>
     <form id="add-shift-form" method="POST" action="/add-shift-form">
         <dt>
+
+
         <label for="input-exhibit_name">Exhibit Name: </label>
         <select name="input-exhibit_name" id="input-exhibit_name" required>
             <option value="">Select an exhibit</option>
-            {{#each data}}
+            {{#each exhibits}}
                 <option value="{{this.exhibit_name}}">{{this.exhibit_name}}</option>
             {{/each}}
         </select>
         </dt>
         <dt>
+
+
+
         <label for="input-employee-id">Employee ID: </label>
-        {{!-- <input type="text" name="input-exhibit_name" id="input-exhibit_name"> --}}
-        <select name="input-employee_id" id="input-employee_id" required>
-            <option value="">Select an employee</option>
-            {{#each data}}
+        <select name="input-employee-id" id="input-employee-id">
+            <option value="">Default: NULL</option>
+            {{#each employ}}
                 <option value="{{this.employee_id}}">{{this.employee_id}}</option>
             {{/each}}
         </select>
+        
         </dt>
         <dt>
         <label for="input-shift-date-start">Shift Start: </label>
@@ -102,7 +107,18 @@
         </select>
         </dt>
         <dt>
+        <label for="update_shift_employee">Employee ID: </label>
+       <select name="update_shift_employee" id="update_shift_employee">
+            <option value="test">Default: NULL</option>
+            {{#each employ}}
+            <option value="{{this.employee_id}}">{{this.employee_id}}</option>
+            {{/each}}
+        </select>
         
+        
+        
+        </dt>
+        <dt>
         <label for="update-shift-date-start">Shift Start: </label>
         <input type="datetime-local" name="update_date_start" id="update_date_start" required>
         </dt>

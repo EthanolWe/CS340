@@ -11,12 +11,14 @@ updateItemForm.addEventListener("submit", function (e) {
 	let inputID = document.getElementById("mySelect");
     let inputStart = document.getElementById("update_date_start");
     let inputEnd = document.getElementById("update_date_end");
+    let inputEmployee = document.getElementById("update_shift_employee");
 
     
     // Get the values from the form fields
     let idValue = inputID.value;
     let startValue = inputStart.value;
     let endValue = inputEnd.value;
+    let empValue = inputEmployee.value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
@@ -26,6 +28,7 @@ updateItemForm.addEventListener("submit", function (e) {
         shift_id: idValue,
         shift_start: startValue,
 		shift_end: endValue,
+        employee_id: empValue,
     }
 
 	console.log(data);

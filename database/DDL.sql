@@ -51,7 +51,7 @@ Create or Replace Table Shift_Details (
 	shift_id int NOT NULL AUTO_INCREMENT,
 	primary key (shift_id),
 	exhibit_name varchar(255) NOT NULL,
-	employee_id int NOT NULL,
+	employee_id int,
 	shift_start datetime NOT NULL,
 	shift_end datetime NOT NULL,
 	foreign key (exhibit_name) references Exhibits(exhibit_name) ON DELETE CASCADE,
