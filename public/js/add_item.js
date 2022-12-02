@@ -26,7 +26,7 @@ addRowToTable = (data) => {
     idCell.innerText = newRow.id;
     exhibitCell.innerText = newRow.exhibit_name;
     dateCell.innerText = newRow.date_last_maintained;
-    repairCell.innerText = newRow.need_repair;
+    repairCell.innerText = repairValue;
     descCell.innerText = newRow.description;
 
     deleteCell = document.createElement("button");

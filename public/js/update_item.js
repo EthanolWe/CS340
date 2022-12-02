@@ -20,7 +20,7 @@ updateItemForm.addEventListener("submit", function (e) {
 	{
 		repairValue = 1;
 	}
-	else{
+	else {
 		repairValue = 0;
 	}
 	

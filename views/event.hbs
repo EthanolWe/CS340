@@ -9,12 +9,13 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th>delete</th>
+            <th>Event ID</th>
+			<th>Event Attendance</th>
+			<th>Event Type</th>
+			<th>Event Date</th>
+			<th>Exhibit Name</th>
+			<th>Host</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -44,6 +45,10 @@
 
     <form id="add-event-form" method="POST" action="/add-event-form">
         <dt>
+        <label for="input-event_attendance">Event Attendance: </label>
+        <input type="text" name="input-event_attendance" id="input-event_attendance" required>
+        </dt>
+		<dt>
         <label for="input-event_type">Event Type: </label>
         <input type="text" name="input-event_type" id="input-event_type" required>
         </dt>

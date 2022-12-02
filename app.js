@@ -196,7 +196,7 @@ app.post('/add-event-form', function(req, res){
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Events (event_type, event_date, exhibit_name, host) VALUES ('${data['input-event_type']}', '${data['input_date']}', '${data['input-exhibit_name']}', '${data['input-host']}')`;
+    query1 = `INSERT INTO Events (event_attendance, event_type, event_date, exhibit_name, host) VALUES ('${data['input-event_attendance']}', '${data['input-event_type']}', '${data['input_date']}', '${data['input-exhibit_name']}', '${data['input-host']}')`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -309,14 +309,12 @@ app.get('/exhibit', function(req, res){
    })
 });
 
-
-
 app.post('/add-exhibit-form', function(req, res){
    // Capture the incoming data and parse it back to a JS object
    let data = req.body;
 
    // Create the query and run it on the database
-   query1 = `INSERT INTO Exhibits (exhibit_name, attendance, is_permanent, theme, rotation_date, install_date, exhibit_past_loc, exhibit_future_loc) VALUES ('${data['input-exhibit_name']}', '${data['input-attendance']}', '${data['input-is_permanent']}', '${data['input-theme']}', '${data['input-rotation_date']}', '${data['input-install_date']}', '${data['input-exhibit_past_loc']}', '${data['input-exhibit_future_loc']}')`;
+   query1 = `INSERT INTO Exhibits (exhibit_name, attendance, is_permanent, theme, rotation_date, install_date, exhibit_past_loc, exhibit_future_loc) VALUES ('${data['input-exhibit_name']}', '${data['input-attendance']}', '${data['input-permanent']}', '${data['input-theme']}', '${data['input-rotation_date']}', '${data['input-install_date']}', '${data['input-exhibit_past_loc']}', '${data['input-exhibit_future_loc']}')`;
    db.pool.query(query1, function(error, rows, fields){
 
        // Check to see if there was an error
@@ -336,25 +334,6 @@ app.post('/add-exhibit-form', function(req, res){
    })
 });
 
-/*app.delete('/delete-exhibit-ajax/', function(req,res,next){
-   let data = req.body;
-   let exhibitName = data.exhibit_name;
-   let deleteExhibit= `DELETE FROM Exhibits WHERE exhibit_name = ?`;
-    
-
-                 // Run the second query
-                 db.pool.query(deleteExhibit, [exhibitName], function(error, rows, fields) {
- 
-                     if (error) {
-                         console.log(error);
-                         res.sendStatus(400);
-                     } else {
-                         
-                         //res.sendStatus(204);
-                     }
-                 })
-});
-*/
 app.delete('/delete-exhibit-ajax/', function(req,res,next){
     let data = req.body;
     let exhibitName = data.exhibit_name;
@@ -390,7 +369,6 @@ app.delete('/delete-exhibit-ajax/', function(req,res,next){
 	})
 });
 
-
 app.put('/put-exhibit-ajax', function(req,res,next){
    let data = req.body;
    //let employeeID = parseInt(data.id);
@@ -425,6 +403,7 @@ app.put('/put-exhibit-ajax', function(req,res,next){
                  })
              }
  })}); 
+
 
 // FUNCTIONS FOR SHIFT DETAILS //
 
@@ -587,7 +566,7 @@ app.post('/add-featured-form', function(req, res){
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Featured_Items (description, date_last_maintained, need_repair, exhibit_name) VALUES ('${data['input-description']}', '${data['input_date']}', '${data['input-need_repair']}', '${data['input-exhibit_name']}')`;
+    query1 = `INSERT INTO Featured_Items (description, date_last_maintained, need_repair, exhibit_name) VALUES ('${data['input-description']}', '${data['input_date']}', '${data['input-repair']}', '${data['input-exhibit_name']}')`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error

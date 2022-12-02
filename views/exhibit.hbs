@@ -8,12 +8,15 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th>delete</th>
+            <th>Exhibit Name</th>
+			<th>Attendance</th>
+			<th>Is Permanent</th>
+			<th>Theme</th>
+			<th>Removal Date</th>
+			<th>Install Date</th>
+			<th>Past Location</th>
+			<th>Future Location</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -52,15 +55,18 @@
         <input type="number" name="input-attendance" id="input-attendance" required>
         </dt>
         <dt>
-        <label for="input-is_permanent">Is Permanent? (bool): </label>
-        <input type="number" name="input-is_permanent" id="input-is_permanent" required>
+        <label for="input-is_permanent">Is Permanent: </label>
+        <input type="radio" name="input-permanent" id="input-permanent-yes" value=1>
+        <label for="input-permanent-yes">Yes </label>
+        <input type="radio" name="input-permanent" id="input-permanent-no" value=0>
+        <label for="input-permanent-no">No</label>
         </dt>
         <dt>
         <label for="input-theme">Theme: </label>
         <input type="text" name="input-theme" id="input-theme">
         </dt>
         <dt>
-        <label for="input-rotation_date">Rotation Date: </label>
+        <label for="input-rotation_date">Removal Date: </label>
         <input type="date" name="input-rotation_date" id="input-rotation_date">
         </dt>
         <dt>
